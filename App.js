@@ -1,18 +1,14 @@
 import { Button, FlatList, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 import { useState } from 'react';
 import GoalItem from './components/GoalsItem'
+import GoalsInput from './components/GoalsInput';
 
 
 export default function App() {
 
-  const [textEntered, setEnteredText] = useState('')
   const [goalsList, setGoalsList] = useState([])
 
-  function handleTextInput(enteredText) {
-    setEnteredText(enteredText)
-  }
-  
-  function handleAddGoalPress() {
+  function handleAddGoalPress(textEntered) {
     setGoalsList((goals) => 
       [...goals, {text: textEntered, id: Math.random.toString()}]
     )
@@ -20,19 +16,7 @@ export default function App() {
   
   return (
     <View style = {styles.parentContainer}>
-     <View style = {styles.inputContainer}>
-      <TextInput 
-      onChangeText={
-        handleTextInput
-      }
-      style = {styles.textInput}
-      placeholder='Please add a Goal'/>
-      <Button
-      onPress={
-        handleAddGoalPress
-      }
-      title='Add Goal'/>
-     </View>
+     <GoalsInput onAddButtonClick = {handleAddGoalPress}/>
      <View style = {styles.listContainer}>
      <FlatList data = {goalsList} renderItem={
       (itemData) => {
